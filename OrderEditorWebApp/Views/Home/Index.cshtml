@@ -1,0 +1,105 @@
+﻿@model OrderEditorWebApp.Models.ViewModelOrder;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="form-group">
+        <a asp-action="Index" asp-controller="Order" class="btn btn-primary" role="button">Add order</a>
+</div>
+
+<form method="get">
+    <div class="form-group">
+        <label class="control-label">Date 1</label>
+        <input type="date" name="dateStart" class="form-control" style="width: 30%" />
+    </div>
+   <div class="form-group">
+        <label class="control-label">Date 2</label>
+        <input type="date" name="dateEnd" class="form-control" style="width: 30%" />
+    </div>
+    <div class="row">
+        <div class="col">
+            <label class="control-label">Order Id</label>
+            <select multiple name="orderId" class="form-control">
+                @if (Model == null)
+                {
+                    <option>No data</option>
+                }
+                else
+                {
+                    @foreach (var order in Model.Orders)
+                    {
+                        @if (order == null)
+                        {
+                            
+                        }
+                        else
+                        {
+                            <option value="@order.Id">@order.Id</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="col">
+            <label class="control-label">Provider</label>
+            <select multiple name="providerId" class="form-control">
+                @if (Model == null)
+                {
+                    <option>No data</option>
+                }
+                else
+                {
+                    @foreach (var provider in Model.Providers)
+                    {
+                        <option value="@provider.Id">@provider.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Use" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Order Id</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Provider</th>
+            <th></th>
+        </tr>
+    </thread>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><tg>NO DATA</tg></tr>
+        }
+        else
+        {
+            @foreach (var order in Model.Orders)
+            {
+                @if (order == null)
+                {
+                    
+                }
+                else
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.Number</td>
+                        <td>@order.Date</td>
+                        <td>@order.Provider.Name</td>
+                        <td>
+                            <a asp-action="details" asp-controller="home" asp-route-id="@order.Id">Details</a>
+                            <a asp-action="editorder" asp-controller="order" asp-route-id="@order.Id">Edit</a>
+                            <a asp-action="deleteorder" asp-controller="order" asp-route-id="@order.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

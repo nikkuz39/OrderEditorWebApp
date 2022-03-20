@@ -1,0 +1,43 @@
+﻿@model OrderEditorWebApp.Models.ViewModelOrder;
+@{
+    ViewData["Title"] = "Edit Order";
+}
+<h3>@ViewData["Title"]</h3>
+<h3>@ViewData["Message"]</h3>
+
+<form asp-action="editorder" asp-controller="order">
+    <input type="hidden" asp-for="Order.Id" />
+    <div class="form-group">
+        <label class="control-label">Number</label>
+        <input type="text" asp-for="Order.Number" class="form-control" style="width: 30%" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Date</label>
+        <input type="date" asp-for="Order.Date" class="form-control" style="width: 30%" />
+    </div>
+    <div>
+        <label class="control-label">Provider</label>
+            <select asp-for="Provider.Id" required class="form-control" style="width: 30%">
+                @if (Model == null)
+                {
+                    <option>No data</option>
+                }
+                else
+                {
+                    @foreach (var provider in Model.Providers)
+                    {
+                        <option value="@provider.Id">@provider.Name</option>
+
+                        @if (Model.Order.ProviderId == provider.Id)
+                        {
+                            <option selected="selected" value="@provider.Id">@provider.Name</option>
+                        }
+                    }
+                }                
+            </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a onclick="clickButton" class="btn btn-primary" asp-action="edititem" asp-controller="item" asp-route-id="@Model.OrderItem.Id">Edit item</a>
+    </div>
+</form>

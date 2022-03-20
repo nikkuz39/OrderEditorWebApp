@@ -1,0 +1,70 @@
+﻿@model OrderEditorWebApp.Models.ViewModelOrder;
+@{
+    ViewData["Title"] = "Add Order";
+}
+<h3>@ViewData["Title"]</h3>
+<h3>@ViewData["Message"]</h3>
+
+<form asp-action="createorder" asp-controller="order">
+    <div class="form-group">
+        <label class="control-label">Number</label>
+        <input type="text" asp-for="Order.Number" class="form-control" style="width: 30%" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Date</label>
+        <input type="date" asp-for="Order.Date" class="form-control" style="width: 30%" />
+    </div>
+    <div>
+        <label class="control-label">Provider</label>
+            <select asp-for="Provider.Id" required class="form-control" style="width: 30%">
+                @if (Model == null)
+                {
+                    <option>No data</option>
+                }
+                else
+                {
+                    @foreach (var provider in Model.Providers)
+                    {
+                        <option value="@provider.Id">@provider.Name</option>
+                    }
+                }
+            </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Provider</th>
+            <th></th>
+        </tr>
+    </thread>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><tg>NO DATA</tg></tr>
+        }
+        else
+        {
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Number</td>
+                    <td>@order.Date</td>
+                    <td>@order.Provider.Name</td>
+                    <td>
+                        <a asp-action="editorder" asp-controller="order" asp-route-id="@order.Id">Edit</a>
+                        <a asp-action="deleteorder" asp-controller="order" asp-route-id="@order.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

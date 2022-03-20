@@ -1,0 +1,41 @@
+﻿@model OrderEditorWebApp.Models.ViewModelOrder;
+@{
+    ViewData["Title"] = "Edit Item";
+}
+<h3>@ViewData["Title"]</h3>
+<h3>@ViewData["Message"]</h3>
+
+<form asp-action="edititem" asp-controller="item">
+    <input type="hidden" asp-for="OrderItem.Id" />
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        <input type="text" asp-for="OrderItem.Name" class="form-control" style="width: 30%" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Quantity</label>
+        <input type="text" asp-for="OrderItem.Quantity" class="form-control" style="width: 30%" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Unit</label>
+        <input type="text" asp-for="OrderItem.Unit" class="form-control" style="width: 30%" />
+    </div>
+    <div>
+        <label class="control-label">Order Id</label>
+            <select asp-for="Order.Id" required class="form-control" style="width: 30%">
+                @if (Model == null)
+                {
+                    <option>No data</option>
+                }
+                else
+                {
+                    @foreach (var order in Model.Orders)
+                    {
+                        <option value="@order.Id">@order.Id</option>
+                    }
+                }
+            </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

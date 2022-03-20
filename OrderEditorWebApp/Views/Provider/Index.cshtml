@@ -1,0 +1,41 @@
+﻿@model OrderEditorWebApp.Models.ViewModelOrder;
+@{
+    ViewData["Title"] = "Add Provider";
+}
+<h3>@ViewData["Title"]</h3>
+<h3>@ViewData["Message"]</h3>
+
+<form asp-action="createprovider" asp-controller="provider">
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        <input type="text" asp-for="Provider.Name" class="form-control" style="width: 30%" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thread>
+        <tr><th>Name</th><th></th></tr>
+    </thread>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><tg>NO DATA</tg></tr>
+        }
+        else
+        {
+            @foreach (var provider in Model.Providers)
+            {
+                <tr>
+                    <td>@provider.Name</td>
+                    <td>
+                        <a asp-action="editprovider" asp-controller="provider" asp-route-id="@provider.Id">Edit</a>
+                        <a asp-action="deleteprovider" asp-controller="provider" asp-route-id="@provider.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
